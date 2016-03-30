@@ -96,7 +96,8 @@ Exporting your PowerPoint to MP4, a format supported by Zipper, is typically don
 2. Go to File > Export > Create a Video
 3. Select your quality and other settings.
 4. Hit "Create Video" and wait while your video is created. This may take a while if you have a large PowerPoint.
-**NOTE:** If your slides do not seem to fit the screen properly, you may want to consider changing the aspect ratio of your slides. Refer to this webpage for assistance. If this does not make a difference, consider selecting a higher quality for video export. If you still have issues, please contact barndyla@amazon.com
+
+**NOTE:** If your slides do not seem to fit the screen properly, you may want to consider changing the aspect ratio of your slides. Refer to this webpage for assistance. If this does not make a difference, consider selecting a higher quality for video export.
 
 ###Embed YouTube Video
 With the release of Zipper 1.05, you can now embed YouTube videos by using the following process.
@@ -106,6 +107,7 @@ With the release of Zipper 1.05, you can now embed YouTube videos by using the f
 3. Select the "Embed" tab.
 4. Copy the URL that is in quotations after the "src=" section.
 5. Paste the URL in "config_video.txt". Also, copy and paste the following to the end of the URL: "?autoplay=1&loop=1&controls=0&showinfo=0".
+
 **EXAMPLE:** The correct URL for the Rollin' Safari video is https://www.youtube.com/embed/yltlJEdSAHw?autoplay=1&loop=1&controls=0&showinfo=0.
 
 ###Toggle AHOD
