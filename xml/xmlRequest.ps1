@@ -1,0 +1,1 @@
+Invoke-WebRequest -OutFile output.xml http://w1.weather.gov/xml/current_obs/KRDR.xml

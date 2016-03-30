@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!-- ONLY SUPPORTS MOZILLA FIREFOX IN A WINDOWS OS -->
+<html lang="en-US">
+<html>
+<head>
+<title>Amazon Display</title>
+<meta name="author" content="Dylan Barnes">
+<meta name="version" content="1.0">
+<meta charset="UTF-8">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="./lib/jquery.marquee.js"></script>
+<link type="text/css" href="./css/jquery.marquee.css" rel="stylesheet" title="default" media="all" />
+</head>
+<body onload="setVideoFile('config_video.txt')">
+
+<input id="inputVid" type="file" style="display:none;" />
+
+<div id="vid">
+	<video class="centerElement" id="innerVid" autoplay loop muted />
+</div>
+
+<div id="footer">
+	<div id="title">
+		<div id="tiTextOut"></div>
+		<p id="tiText"></p>
+	</div>
+	<div id="boText" class="marquee" data-duplicated='false' data-direction='left'></div>
+</div>
+
+<!--These do not appear on the page. They are used to store data.-->
+<ul id="bodyList"></ul>
+<ul id="titleList"></ul>
+
+<script>
+// This script code stores info from config_ticker into #bodyList and #titleList
+var textFileInput;
+function setTextFile()
+{
+	    var rawFile = new XMLHttpRequest();
+		var titleText = [];
+		var bodyText = [];
+	    rawFile.open("GET", "config_ticker.txt", false);
+	    rawFile.onreadystatechange = function ()
+	    {
+			if(rawFile.readyState === 4)
+			{
+				if(rawFile.status === 200 || rawFile.status == 0)
+				{
+					var allText = rawFile.responseText.toString().trim();
+					textFileInput = allText;
+					
+					//Pulls in data from XML file and adds it to allText.
+					//This updates the weather data at the end of the marquee.
+					xmlhttp=new XMLHttpRequest();
+					xmlhttp.open("GET","xml/output.xml",false);
+					xmlhttp.send();
+					xmlDoc=xmlhttp.responseXML;	
+					xmlString = ("\n" + "Weather | The current temperature is "
+					+ xmlDoc.getElementsByTagName("temp_f")[0].childNodes[0].nodeValue + 
+					" degrees. There is a " + xmlDoc.getElementsByTagName("wind_dir")[0].childNodes[0].nodeValue + 
+					" wind gusting at " + xmlDoc.getElementsByTagName("wind_mph")[0].childNodes[0].nodeValue + " mph.");
+					allText = allText + xmlString;				
+					
+					allText = allText.split("\n");
+					
+					//Puts data into two separate arrays for title and body.
+					for (i=0; i<allText.length; i++)
+					{
+						if(allText[i].trim()){
+							if(allText[i].split("|").length > 1){
+								titleText.push(allText[i].split("|")[0]);
+								bodyText.push(allText[i].split("|")[1]);
+							}
+							//If there is no "|" add to previous index.
+							else{
+								bodyText[bodyText.length-1] = bodyText[bodyText.length-1] + allText[i];
+							}
+						}
+					}
+					
+					//Sets the initial title.
+					document.getElementById('tiText').innerHTML = titleText[0];
+					
+					//Set the initial body.
+					document.getElementById('boText').innerHTML = bodyText[0];
+					
+					//Adds titleText and bodyText to ul and li elements.
+					//Generated before the page loads.
+					for(i=0; i<bodyText.length; i++)
+					{
+					
+						if(titleText[i]){
+							//Title
+							var newElem2 = document.createElement("li");
+							var newElemText2 = document.createTextNode(titleText[i]);
+							newElem2.appendChild(newElemText2);
+							
+							var parent2 = document.getElementById("titleList");
+							parent2.appendChild(newElem2);						
+						}
+					
+						if(bodyText[i]){							
+							//Body
+							var newElem = document.createElement("li");
+							var newElemText = document.createTextNode(bodyText[i]);
+							newElem.appendChild(newElemText);
+							
+							var parent = document.getElementById("bodyList");
+							parent.appendChild(newElem);
+						}
+					}
+						
+				}
+			}
+	    }
+	    rawFile.send(null);
+}
+setTextFile();
+</script>
+<script>
+// Due to the nature of Chrome and IE, local files can only be accessed by Firefox.
+var tiCounter = 0;
+
+//Checks to see if configer_ticker.txt has changed.
+function checkTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText.toString();
+				if(allText.trim() !== textFileInput.trim()){
+					location.reload();
+				}
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+// Pulls text from video.txt and calls setVideoSrc if text has changed.
+function setVideoFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+				//Check for content type, mp4 or webpage.
+				var type;
+                var allText = rawFile.responseText.toString();
+				var linkResult = allText.search(/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/ig);
+				if(linkResult !== -1){
+					type = "web";
+				}
+				else{
+					type = "mp4";
+				}
+				//MP4
+				if(type === "mp4"){
+					//Split the config text differently depending on content type.
+					var splitArray = document.getElementById('innerVid').src.split("/");
+					//trim is needed for linux/windows compatibility.
+					if(splitArray[splitArray.length - 1].trim() !== allText.trim()){
+						//Create video element.
+						$(document).ready(function(){
+							$("iframe").replaceWith("<video class=\"centerElement\" id=\"innerVid\" autoplay loop muted />");
+						});	
+						setVideoSrc(allText);
+					}
+				}
+				//Webpage
+				else{
+					if(document.getElementById('innerVid').src.trim() !== allText.trim()){
+						//Create iframe element.
+						$(document).ready(function(){
+							$("video").replaceWith("<iframe id=\"innerVid\" src=\"\" frameborder=\"0\" ></iframe>");
+						});	
+						setVideoSrc(allText);
+					}	
+				}
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+// Sets the source in the video tag.
+function setVideoSrc(locAlert){
+	document.getElementById('innerVid').src = locAlert;
+}
+
+//Opens output.xml, grabs whether data, and adds to HTML DOM
+//newMar will then pull from the HTML DOM
+function updateWeatherData(){
+	xmlhttp=new XMLHttpRequest();
+	xmlhttp.open("GET","xml/output.xml",false);
+	xmlhttp.send();
+	xmlDoc=xmlhttp.responseXML;	
+	xmlString = ("The current temperature is "
+	+ xmlDoc.getElementsByTagName("temp_f")[0].childNodes[0].nodeValue + 
+	" degrees. There is a " + xmlDoc.getElementsByTagName("wind_dir")[0].childNodes[0].nodeValue + 
+	" wind gusting at " + xmlDoc.getElementsByTagName("wind_mph")[0].childNodes[0].nodeValue + " mph.");
+	document.getElementById("bodyList")
+	.childNodes[document.getElementById("bodyList").childNodes.length - 1].innerHTML = xmlString;
+}
+
+//Creates a new marquee, used to display a new message from the ul and li classes.
+function newMar(){
+
+	//If there is not another li element, reset counter.
+	if(!document.getElementById("bodyList").childNodes[tiCounter]){
+		tiCounter = 0;
+		document.getElementById("boText").innerHTML = document.getElementById("bodyList").childNodes[tiCounter].innerHTML;
+		if(document.getElementById("tiText").innerHTML !== document.getElementById("titleList").childNodes[tiCounter].innerHTML){
+			document.getElementById("tiText").innerHTML = document.getElementById("titleList").childNodes[tiCounter].innerHTML;
+			$("#tiText").hide().fadeIn(2000);
+		}
+	}
+	else{
+		//If this is the first element. (Second loop and onward)
+		if(tiCounter === 0){
+			document.getElementById("tiText").innerHTML = document.getElementById("titleList").childNodes[tiCounter].innerHTML;
+			$("#tiText").hide().fadeIn(2000);	
+		}
+		//If the title has changed from the previous one being displayed.
+		else if(document.getElementById("titleList").childNodes[tiCounter].innerHTML !== document.getElementById("titleList").childNodes[tiCounter-1].innerHTML){
+			document.getElementById("tiText").innerHTML = document.getElementById("titleList").childNodes[tiCounter].innerHTML;
+			$("#tiText").hide().fadeIn(2000);	
+		}
+		document.getElementById("boText").innerHTML = document.getElementById("bodyList").childNodes[tiCounter].innerHTML;
+	}
+
+	//Increments to move to next il element.
+	tiCounter++;
+
+	//jQuery used to create the marquee from a div element.
+	$('.marquee')
+		.bind('beforeStarting', function () {
+			//code you want to execute before starting the animations
+		})
+		.bind('finished', function () {
+			//code you want to execute after each animation loop
+			//Change text to something else after loop finishes
+			$(this).marquee('destroy');		
+			//Apply marquee plugin again
+			newMar();
+		})
+		//Apply plugin
+		.marquee({
+			//Controls the speed of the marquee.
+			duration: 10000
+		});
+}
+
+//Original marquee call.
+newMar();
+
+//Runs two functions every second.
+setInterval(function () {checkTextFile("config_ticker.txt")}, 1000);
+setInterval(function () {setVideoFile("config_video.txt")}, 1000);
+setInterval(function () {updateWeatherData()}, 60000);
+
+</script>
+</body>
+</html>

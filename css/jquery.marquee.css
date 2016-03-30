@@ -1,0 +1,62 @@
+body {
+    margin:0;
+    text-align: center;
+	background-color: rgb(0,0,0);
+
+}
+#vid {
+	text-align: center;
+	height: 84vh;
+	width: 99.7%;
+	background-color: rgb(0,0,0);
+	border-top: 2px solid rgb(120,120,120);
+	border-left: 2px solid rgb(120,120,120);
+	border-right: 2px solid rgb(120,120,120);
+
+}
+#innerVid {
+	height: 84vh;
+	width:  99.7%;
+	max-height: 84vh;
+	max-width:  99.7%;
+	position:relative;
+	top: 50%;
+	transform: translateY(-50%);	
+}
+#footer{
+	height: 15vh;
+	width: 99.6%;
+	border-style: outset; 
+	border-color: black;
+}
+#title{
+	height: 15vh;
+	width: 20%;
+	float: left;
+	background: -moz-linear-gradient(top, #0a0a0a 0%, #808080 49%, #0a0a0a 100%, #0a0a0a 100%, #808080 100%);
+	border-right: 2px solid rgb(120,120,120);
+	font: 2.6vw "Arial Black", Gadget, sans-serif;
+	color: #FF4500;
+}
+#tiTextOut{
+}
+#tiText{
+	margin: 0;
+	padding: 0;
+	position:relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+#bodyList, #titleList{
+	display: none;
+}
+.marquee {
+	height: 15vh;
+	width: 79.80%;
+	float: left;	
+	overflow: hidden;
+	background: rgb(0, 0, 0);
+	font: 3vw Arial, Helvetica, sans-serif;
+	color: rgb(255, 255, 255);
+	line-height: 15vh;	/*Centers the text. Must match height*/
+}
