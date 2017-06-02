@@ -1,15 +1,15 @@
 # Zipper
-##Overview
+## Overview
 Zipper is an ESPN-style ticker designed to be portable, efficient, and operate properly without internet access. Zipper improves communication throughout call centers by displaying a video/PowerPoint along with an easily customizable ticker across multiple displays, typically site-wide. It was originally designed and implemented by barndyla at GFK, and has since been expanded to other locations as well. 
 
 **Important:** Zipper is only designed to run in a Firefox web browser. Running Zipper in another browser may result in content displaying incorrectly.
 
-##Features
+## Features
 Zipper comes with a variety of features. When Zipper is installed at your site, you may request specific features be included or left out. 
 
 **NOTE:** There are additional features planned for Zipper in future releases. Please refer to the "Upcoming Features" section below for more details.
 
-###Ticker
+### Ticker
 The ticker is an ESPN-syle scroller that scrolls from right to left along the bottom of the screen. The ticker allows for efficient communication across an entire site, as changing the text displayed in the scroller takes mere seconds. The ticker has the following features:
 
 * **Easily add/remove content displayed on the ticker by modifying a simple configuration file.**
@@ -24,7 +24,7 @@ The ticker is an ESPN-syle scroller that scrolls from right to left along the bo
 * Automatic refresh
 * **The ticker will automatically update when the configuration file has been changed.**
 
-###Content Display
+### Content Display
 Currently, Zipper is compatible with MP4 files. This format is convenient, as it is natively supported in HTML5, and PowerPoints can easily be converted into this format as well. Current features include:
 
 * **Multiple video file support.**
@@ -33,7 +33,7 @@ Currently, Zipper is compatible with MP4 files. This format is convenient, as it
 * **Automatic refresh**
 * The web page will automatically update when the configuration file has been changed.
 
-###AHOD Switch
+### AHOD Switch
 Zipper comes with a script that may be executed when the site is All Hands on Deck. Current features include:
 
 * **A toggle script to automatically begin or end the AHOD.**
@@ -41,7 +41,7 @@ Zipper comes with a script that may be executed when the site is All Hands on De
 * The messages and video for AHOD may be customized.
 * **Seamless transition back to what was previously being displayed by running the toggle script again.**
 
-##Upcoming Features
+## Upcoming Features
 As of 2016, Zipper is still being improved. Below are a list of upgrades that are planned for Q1 2016:
 
 * **Zipper GUI**
@@ -49,10 +49,10 @@ As of 2016, Zipper is still being improved. Below are a list of upgrades that ar
 * This will replace the need to directly edit the config files.
 * The interface will be web-based, allowing easy access and a clean look.
 
-##Using Zipper
+## Using Zipper
 This section will walk through how to use the various features of Zipper, as outlined in the "Features" section above. The main directory will contain all the files a typical user should need.
 
-###Edit Ticker Text
+### Edit Ticker Text
 1. Locate the main Zipper directory. This is typically the folder with a "tv_display.html" file in it.
 2. Edit the "config_ticker.txt" file. This is the config file for the ticker.
 3. Each line in this file represents a separate message that will be displayed on the ticker. The format is as follows:
@@ -63,8 +63,8 @@ This section will walk through how to use the various features of Zipper, as out
         Title n | body of message n
 
 
-###Change Content Display
-####MP4 Video
+### Change Content Display
+#### MP4 Video
 There are two ways to change the video being displayed in Zipper. The first way involves overwriting the previous video with a new one.
 
 1. Locate the main Zipper directory. This is typically the folder with a "tv_display.html" file in it.
@@ -79,7 +79,7 @@ The second method is similar to the first, but allows you to have videos with di
 3. Edit the "config_video.txt" file. This is the config file for the video.
 4. Change the file name in this file to the file name of the new video you wish to play.
 
-####URL
+#### URL
 The method for changing the URL displayed in the content display varies only slightly from what is explained above. Simply paste the entire URL you wish to display in the "config_video.txt" file.
 
 Websites that have been proven to function properly:
@@ -89,7 +89,7 @@ Websites that have been proven to function properly:
 * W3 Website
 There are numerous other websites that are supported as well. Any website that can be embedded in an HTML iFrame will work properly with Zipper.
 
-###Export PowerPoint presentation to MP4 file
+### Export PowerPoint presentation to MP4 file
 Exporting your PowerPoint to MP4, a format supported by Zipper, is typically done at numerous call centers. The instructions below describe how to export your PowerPoint.
 
 1. Launch PowerPoint and open your PowerPoint file.
@@ -99,7 +99,7 @@ Exporting your PowerPoint to MP4, a format supported by Zipper, is typically don
 
 **NOTE:** If your slides do not seem to fit the screen properly, you may want to consider changing the aspect ratio of your slides. Refer to this webpage for assistance. If this does not make a difference, consider selecting a higher quality for video export.
 
-###Embed YouTube Video
+### Embed YouTube Video
 With the release of Zipper 1.05, you can now embed YouTube videos by using the following process.
 
 1. Find the YouTube video you wish to embed.
@@ -110,7 +110,7 @@ With the release of Zipper 1.05, you can now embed YouTube videos by using the f
 
 **EXAMPLE:** The correct URL for the Rollin' Safari video is https://www.youtube.com/embed/yltlJEdSAHw?autoplay=1&loop=1&controls=0&showinfo=0.
 
-###Toggle AHOD
+### Toggle AHOD
 Toggling the current mode that Zipper is in is very straightforward. You can either toggle AHOD mode for an individual machine, or use a "ToggleAllAHOD" script to toggle the current mode on multiple machines. The process is as follows.
 
 * **ToggleAHOD** - Only use this script if you are logged into the machine running Zipper. It will toggle the current mode for this machine only.
@@ -122,7 +122,7 @@ If you would like to modify the content that scrolls along the bottom, you can d
 
 Updating the AHOD video displayed during AHOD mode follows the same procedure as updating the normal video. The only difference is the file name, which is defined in "config_video_AHOD.txt". Please refer to the "Change Content Display" section for more details.
 
-##Change Log
+## Change Log
 * **Zipper 1.0**
 * Allows the user to easily display an MP4 with scrolling text underneath. Both the video and text can be specified via a config file.
 * Live weather data is pulled in every hour and displayed as scrolling text underneath the video.
@@ -140,7 +140,7 @@ Updating the AHOD video displayed during AHOD mode follows the same procedure as
 * Adds a graphical user interface that users can use to configure Zipper as opposed to text files.
 * Incorporates AHOD mode into the new GUI.
 
-##Basic Troubleshooting
+## Basic Troubleshooting
 
 **The ticker text or video is not updating.**
 
